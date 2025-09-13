@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/твой_юзернейм/ci-cd-lab.git', branch: env.BRANCH_NAME
+                git url: 'https://github.com/DinoBombino/CI-CD_lab.git', branch: env.BRANCH_NAME
             }
         }
         stage('Test (CI)') {
