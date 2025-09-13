@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Test (CI)') {
             steps {
-                bat 'python test_main.py'
+                bat 'python test-main.py'
             }
         }
         stage('Deploy (CD)') {
