@@ -10,7 +10,8 @@ pipeline {
         stage('Test (CI)') {
             steps {
                 //bat 'python test-main.py'
-                bat '"C:\Users\Dmitriy\AppData\Local\Programs\Python\Python312\" test-main.py'
+                // bat '"C:\Users\Dmitriy\AppData\Local\Programs\Python\Python312\" test-main.py'
+                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" test-main.py'
             }
         }
         stage('Deploy (CD)') {
