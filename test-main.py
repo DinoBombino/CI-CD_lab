@@ -12,7 +12,7 @@ class TestAdd(unittest.TestCase):
         self.assertEqual(add(-1, 1), 0)
         
     def test_add_neg_2(self):
-        self.assertEqual(add(-5, 1), 0)
+        self.assertEqual(add(-5, 1), -4)
 
 if __name__ == '__main__':
     unittest.main()
