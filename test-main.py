@@ -10,6 +10,9 @@ class TestAdd(unittest.TestCase):
 
     def test_add_neg(self):
         self.assertEqual(add(-1, 1), 0)
+        
+    def test_add_neg_2(self):
+        self.assertEqual(add(-5, 1), 0)
 
 if __name__ == '__main__':
     unittest.main()
