@@ -27,10 +27,16 @@ pipeline {
                 // bat 'copy dist\\calc-app.exe production\\'  // Копируем exe в "production" (деплой)
                 // echo 'Deploy successful: calc-app.exe deployed to production folder!'
 
-                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install pyinstaller'  // Полный путь + -m pip
-                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pyinstaller.exe" --onefile --name calc-app main.py'  // Полный путь к pyinstaller.exe
-                bat 'mkdir production || echo "Directory exists"'
-                bat 'copy dist\\calc-app.exe production\\'
+                // bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install pyinstaller'  // Полный путь + -m pip
+                // bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pyinstaller.exe" --onefile --name calc-app main.py'  // Полный путь к pyinstaller.exe
+                // bat 'mkdir production || echo "Directory exists"'
+                // bat 'copy dist\\calc-app.exe production\\'
+                // echo 'Deploy successful: calc-app.exe deployed to production folder!'
+
+                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install pyinstaller'
+                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pyinstaller.exe" --onefile --name calc-app main.py'
+                bat 'if not exist production mkdir production'  // Создаёт только если нет, без ошибки
+                bat 'copy /Y dist\\calc-app.exe production\\'  // /Y — перезаписывает без промпта, если файл существует
                 echo 'Deploy successful: calc-app.exe deployed to production folder!'
             }
         }
