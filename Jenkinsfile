@@ -16,10 +16,15 @@ pipeline {
         }
         stage('Deploy (CD)') {
             when {
-                branch 'main'  // Только для main-ветки
+                branch 'main'  
             }
             steps {
-                echo 'Deploying to production...'  // Симуляция деплоя
+                // echo 'Deploying to production...'  
+                bat 'pip install pyinstaller'  // Установка, если нет (Jenkins может кэшировать)
+                bat 'pyinstaller --onefile --name calc-app main.py'  // Генерация exe (--onefile = один файл)
+                bat 'mkdir production'  // Создай папку, если нет
+                bat 'copy dist\\calc-app.exe production\\'  // Копируем exe в "production" (деплой)
+                echo 'Deploy successful: calc-app.exe deployed to production folder!'
             }
         }
     }
