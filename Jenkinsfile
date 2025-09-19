@@ -27,9 +27,9 @@ pipeline {
                 // bat 'copy dist\\calc-app.exe production\\'  // Копируем exe в "production" (деплой)
                 // echo 'Deploy successful: calc-app.exe deployed to production folder!'
 
-                bat 'pip install pyinstaller'  // Устанавливаем PyInstaller
-                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\pyinstaller.exe" --onefile --name calc-app main.py'
-                bat 'mkdir production || echo "Directory exists"'  // Создаём папку, игнорируем ошибку если есть
+                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install pyinstaller'  // Полный путь + -m pip
+                bat '"C:\\Users\\Dmitriy\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pyinstaller.exe" --onefile --name calc-app main.py'  // Полный путь к pyinstaller.exe
+                bat 'mkdir production || echo "Directory exists"'
                 bat 'copy dist\\calc-app.exe production\\'
                 echo 'Deploy successful: calc-app.exe deployed to production folder!'
             }
