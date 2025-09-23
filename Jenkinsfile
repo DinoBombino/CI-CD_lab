@@ -4,7 +4,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/DinoBombino/CI-CD_lab.git', 
-                branch: 'main'
+                // branch: 'main',
+                // branch: 'dev'
+                branch: env.BRANCH_NAME
             }
         }
         stage('Test (CI)') {
@@ -15,9 +17,9 @@ pipeline {
             }
         }
         stage('Deploy (CD)') {
-            // when {
-            //     branch 'main'  
-            // }
+            when {
+                branch 'main'  
+            }
             steps {
                 // echo 'Deploying to production...'  
 
