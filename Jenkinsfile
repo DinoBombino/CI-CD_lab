@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Test (CI)') {
             steps {
-                bat 'docker run --rm calc-api pytest test_api.py -k test_functions'  // Только функциональные тесты
+                bat 'docker run --rm calc-api pytest test_api.py -k test_functions'
             }
         }
         stage('Push Docker (CD)') {
