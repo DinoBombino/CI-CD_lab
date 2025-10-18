@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  calc-api:
+    build: .  # Собирает из Dockerfile
+    ports:
+      - "5000:5000"  # Порт хоста:порт контейнера
+    volumes:
+      - ./calc.db:/app/calc.db  # Сохраняет БД на хосте
