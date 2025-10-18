@@ -22,6 +22,10 @@ def add(a, b):
 def min(a, b):
     return a - b
 
+# Создаём таблицы перед запуском приложения
+with app.app_context():
+    db.create_all()
+
 @app.route('/calculate', methods=['POST'])
 def calculate():
     data = request.json
@@ -43,6 +47,4 @@ def history():
     return jsonify([{'id': c.id, 'a': c.a, 'b': c.b, 'op': c.op, 'result': c.result} for c in calcs])
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # Создаёт таблицы в БД
     app.run(debug=True, host='0.0.0.0', port=5000)
