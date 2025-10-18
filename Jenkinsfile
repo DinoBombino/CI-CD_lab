@@ -31,6 +31,7 @@ pipeline {
         stage('Deploy (CD)') {
             when { branch 'main' }
             steps {
+                bat 'docker-compose down || exit 0'  // Останавливаем старые контейнеры, если есть
                 bat 'docker-compose up -d'
                 echo 'Deploy successful: API running at http://localhost:5000'
             }
