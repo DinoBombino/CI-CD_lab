@@ -2,6 +2,7 @@
 services:
   calc-api:
     build: .
+    image: brodyagaexe/calc-api:latest
     expose:
       - "5000"  # Только внутренний порт, не мапим наружу
     volumes:
