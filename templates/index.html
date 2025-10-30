@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator API</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; }
+        form { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        input, select, button { margin: 5px; padding: 8px; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; }
+        #result { font-weight: bold; margin: 10px 0; }
+        #history { border-top: 1px solid #eee; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <form id="calcForm">
+        A: <input type="number" id="a" value="2" required><br>
+        B: <input type="number" id="b" value="3" required><br>
+        Op: <select id="op">
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select><br>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+    
+    <h2>History</h2>
+    <button onclick="clearHistory()">Clear History</button>
+    <div id="history"></div>
+
+    <script>
+        document.getElementById('calcForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await calculate();
+        });
+
+        async function calculate() {
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+            const op = document.getElementById('op').value;
+            
+            try {
+                const res = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({a: parseFloat(a), b: parseFloat(b), op})
+                });
+                
+                if (!res.ok) throw new Error('Calculation failed');
+                
+                const data = await res.json();
+                document.getElementById('result').innerHTML = 
+                    `<p>Result: ${data.result} (ID: ${data.id})</p>`;
+                loadHistory();
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function loadHistory() {
+            try {
+                const hist = await fetch('/history');
+                const data = await hist.json();
+                document.getElementById('history').innerHTML = 
+                    data.map(c => `<p>${c.a} ${c.op} ${c.b} = ${c.result} (ID: ${c.id})</p>`).join('');
+            } catch (error) {
+                console.error('Failed to load history:', error);
+            }
+        }
+
+        async function clearHistory() {
+            if (confirm('Are you sure you want to clear history?')) {
+                await fetch('/history', { method: 'DELETE' });
+                loadHistory();
+            }
+        }
+
+        // Загрузка истории при старте
+        loadHistory();
+    </script>
+</body>
+</html>

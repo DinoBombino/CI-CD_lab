@@ -1,8 +1,15 @@
 # version: '3.8'
 services:
   calc-api:
-    build: .  # Собирает из Dockerfile
-    ports:
-      - "5000:5000"  # Порт хоста:порт контейнера
+    build: .
+    expose:
+      - "5000"  # Только внутренний порт, не мапим наружу
     volumes:
-      - ./calc.db:/app/calc.db  # Сохраняет БД на хосте
+      - ./calc.db:/app/calc.db
+
+  nginx:
+    build: ./nginx  # Из nginx/Dockerfile
+    ports:
+      - "80:80"  # Nginx на 80 (браузер по умолчанию)
+    depends_on:
+      - calc-api  # Запускается после API

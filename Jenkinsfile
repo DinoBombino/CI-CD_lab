@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')  // ID из Jenkins
-        IMAGE_NAME = 'brodyagaexe/calc-api'  // Замени на твой логин
+        IMAGE_NAME = 'brodyagaexe/calc-api'  
     }
     stages {
         stage('Checkout') {
@@ -12,7 +12,8 @@ pipeline {
         }
         stage('Build Docker (CI)') {
             steps {
-                bat 'docker build -t calc-api .'
+                // bat 'docker build -t calc-api .'
+                bat 'docker-compose build --no-cache'  // Собирает ВСЕ образы из compose
             }
         }
         stage('Test (CI)') {
